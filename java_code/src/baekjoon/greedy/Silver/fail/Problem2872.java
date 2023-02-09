@@ -34,8 +34,10 @@ public class Problem2872 {
         int maxTarget = listSorted.size() - 1;
 
         for(int i = list.size() - 1; i >= 0; i--) {
-            if(list.get(i) == max && maxTarget != 0) {
-                max = listSorted.get(--maxTarget);
+            if(list.get(i) == max) {
+                if(maxTarget != 0){
+                    max = listSorted.get(--maxTarget);
+                }
             }else {
                 answer++;
             }
