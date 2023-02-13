@@ -1,4 +1,4 @@
-package sortalgorithm;
+package algorithm;
 
 /**
  * 버블 정렬 구현

@@ -1,4 +1,4 @@
-package sortalgorithm;
+package algorithm;
 
 /**
  * 삽입 정렬

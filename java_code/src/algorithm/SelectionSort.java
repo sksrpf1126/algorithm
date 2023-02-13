@@ -1,4 +1,4 @@
-package sortalgorithm;
+package algorithm;
 
 /**
  * 선택 정렬

@@ -1,4 +1,4 @@
-package sortalgorithm;
+package algorithm;
 
 /**
  * 힙 정렬은 크게 1. 배열 -> 최대 힙 변환  2. 최대 힙 정렬(root노드가 최댓값인 것을 활용) 으로 이루어진다.
