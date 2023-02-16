@@ -9,11 +9,17 @@ import java.util.StringTokenizer;
  * 실버 1
  * 링크와 스타트
  *
+ * MIN값을  Integer.MAX_VALUE 로 잘못 생각하고 초기화 해서 반례도움을 받은 문제
+ * 최솟값이 int형의 최댓값보다 클 수 있으므로, Long 타입의 최댓값으로 초기화를 하는게 맞다...
+ *
  */
-public class Problem15661 {
-    public static int N;
-    public static int[][] statusMap;
-    public static int answer = Integer.MAX_VALUE;
+public class Problem2529 {
+    public static int K;
+    public static int[] numbers = new int[]{0,1,2,3,4,5,6,7,8,9};
+    public static int[] permutationNumbers;
+    public static char[] signs;
+    public static long MAX = 0;
+    public static long MIN = Long.MAX_VALUE;
     public static boolean[] visits;
 
     public static void main(String[] args) throws IOException {
@@ -23,70 +29,80 @@ public class Problem15661 {
 
     public static void solution() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        statusMap = new int[N][N];
-        visits = new boolean[N];
+        K = Integer.parseInt(br.readLine());
 
-        StringTokenizer sToken;
+        visits = new boolean[10];
+        signs = new char[K];
+        permutationNumbers = new int[K + 1];
 
-        //1부터 접근
-        for(int i = 0; i < N; i++) {
-            sToken = new StringTokenizer(br.readLine());
-            for(int j = 0; j < N; j++){
-                statusMap[i][j] = Integer.parseInt(sToken.nextToken());
-            }
+        StringTokenizer sToken = new StringTokenizer(br.readLine());
+
+        for(int i = 0; i < K; i++) {
+            signs[i] = sToken.nextToken().charAt(0);
         }
 
-        for(int i = 1; i < N; i++) {
-            teamCombination(0,0, i);
+        permutation(0);
+
+        System.out.println(MAX);
+
+        String min = String.valueOf(MIN);
+
+        if(min.length() < K + 1) {
+            min = "0" + min;
         }
 
-        System.out.println(answer);
+        System.out.println(min);
 
 
     }
 
-    public static void teamCombination(int idx, int start, int R) {
-        if(idx == R) {
-            diff();
+    public static void permutation(int idx) {
+        if(idx == K + 1) {
+            compareNumber();
             return;
         }
 
-        for(int i = start; i < N; i++) {
+        for(int i = 0; i < numbers.length; i++) {
+            if(visits[i]) continue;
 
-            if(!visits[i]) {
-                visits[i] = true;
-                teamCombination(idx + 1, i + 1, R);
-                visits[i] = false;
-            }
+            permutationNumbers[idx] = numbers[i];
+            visits[i] = true;
+            permutation(idx + 1);
+            visits[i] = false;
+
         }
     }
 
-    public static void diff() {
-        int teamAstatus = 0;
-        int teamBstatus = 0;
+    public static void compareNumber() {
+        boolean numberCombiOk = true;
 
-        for(int i = 0; i < N -1; i++) {
-            for(int j = i + 1; j < N; j++) {
-                if(visits[i] == true && visits[j] == true) {
-                    teamAstatus += statusMap[i][j];
-                    teamAstatus += statusMap[j][i];
-                }else if(visits[i] == false && visits[j] == false) {
-                    teamBstatus += statusMap[i][j];
-                    teamBstatus += statusMap[j][i];
+        for(int i = 0; i + 1 < permutationNumbers.length; i++) {
+            if(signs[i] == '>') {
+                if(permutationNumbers[i] <= permutationNumbers[i + 1]){
+                    numberCombiOk = false;
+                    break;
+                }
+            }else if(signs[i] == '<') {
+                if(permutationNumbers[i] >= permutationNumbers[i + 1]) {
+                    numberCombiOk = false;
+                    break;
                 }
             }
         }
 
-        int value = Math.abs(teamAstatus - teamBstatus);
-
-        //0이라면 제일 작은 값이므로, exit(0)을 통해 종료.
-        if(value == 0) {
-            System.out.println(value);
-            System.exit(0);
+        if(!numberCombiOk) {
+            return;
         }
 
-        answer = Math.min(answer, value);
+        String str = "";
+
+        for (int number : permutationNumbers) {
+            str += number;
+        }
+
+        MAX = Math.max(MAX, Long.parseLong(str));
+        MIN = Math.min(MIN, Long.parseLong(str));
 
     }
+
 }
