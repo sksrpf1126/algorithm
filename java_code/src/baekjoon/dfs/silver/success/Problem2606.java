@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 /**
@@ -15,6 +16,7 @@ public class Problem2606 {
     public static LinkedList<Integer>[] graph;
     public static boolean[] visits;
     public static int answer = 0;
+    public static Queue<Integer> q = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
         solution();
@@ -44,9 +46,28 @@ public class Problem2606 {
             graph[v1].add(v2);
         }
 
-        dfs(1);
+//        dfs(1);
+        bfs(1);
         System.out.println(answer);
 
+    }
+
+    public static void bfs(int startNode) {
+        q.offer(startNode);
+
+        visits[startNode] = true;
+
+        while (!q.isEmpty()) {
+            int v = q.poll();
+
+            for(int node : graph[v]) {
+                if(!visits[node]) {
+                    answer++;
+                    visits[node] = true;
+                    q.offer(node);
+                }
+            }
+        }
     }
 
     public static void dfs(int startNode) {
