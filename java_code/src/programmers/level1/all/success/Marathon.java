@@ -3,10 +3,6 @@ package programmers.level1.all.success;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * level 2
- * 전력망을 둘로 나누기
- */
 public class Marathon {
 
     public static void main(String[] args) {

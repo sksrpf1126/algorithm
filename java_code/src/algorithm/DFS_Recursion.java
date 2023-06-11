@@ -1,7 +1,7 @@
 package algorithm;
 
 /**
- * DFS(너비 우선 탐색)을 재귀함수로 구현함
+ * DFS(깊이 우선 탐색)을 재귀함수로 구현함
  * https://codingnojam.tistory.com/44 참고
  *
  */
