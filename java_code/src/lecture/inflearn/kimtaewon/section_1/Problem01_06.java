@@ -1,4 +1,4 @@
-package lecture.inflearn.kimtaewon.string;
+package lecture.inflearn.kimtaewon.section_1;
 
 import java.io.BufferedReader;
 import java.io.IOException;

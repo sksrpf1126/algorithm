@@ -1,4 +1,4 @@
-package lecture.inflearn.kimtaewon.Array;
+package lecture.inflearn.kimtaewon.section_2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,13 +7,9 @@ import java.util.StringTokenizer;
 
 
 /**
- * 10. 봉우리
+ * 9. 격자판 최대합
  */
-public class Problem02_10 {
-
-    public static int[] dx = {-1, 1, 0, 0};
-    public static int[] dy = {0, 0, -1, 1};
-
+public class Problem02_09 {
     public static void main(String[] args) throws IOException {
         solution();
     }
@@ -30,30 +26,25 @@ public class Problem02_10 {
             }
         }
 
-        int currentValue;
-        int answer = 0;
-        boolean flag;
+        int sum1, sum2, answer = 0;
 
         for(int i = 0; i < N; i++) {
+            sum1 = sum2 = 0;
             for(int j = 0; j < N; j++) {
-                currentValue = array[i][j];
-                flag = true;
-
-                for(int k = 0; k < 4; k++) {
-                    int nx = dx[k] + i;
-                    int ny = dy[k] + j;
-
-                    if(nx >= 0 && nx < N && ny >= 0 && ny < N) {
-                        if(currentValue <= array[nx][ny]) {
-                            flag = false;
-                            break;
-                        }
-                    }
-                }
-
-                if(flag) answer++;
+                sum1 += array[i][j];
+                sum2 += array[j][i];
             }
+            answer = Math.max(answer, sum1);
+            answer = Math.max(answer, sum2);
         }
+        sum1=sum2=0;
+        for(int i = 0; i < N; i++) {
+            sum1 += array[i][i];
+            sum2 += array[i][N - 1 - i];
+        }
+
+        answer = Math.max(answer, sum1);
+        answer = Math.max(answer, sum2);
 
         System.out.println(answer);
 
